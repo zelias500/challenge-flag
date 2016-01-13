@@ -14,8 +14,6 @@ router.get('/vid',  (req, res, next) => {
     Vid.find({}).then(vid => {
       res.status(200).json(vid)
     })
-    // const vids = await Vid.find({});
-    // res.status(200).json(vid);
   }
   catch (err) {
     next(err);
@@ -29,8 +27,7 @@ router.post('/vid',  (req, res, next) => {
     Vid.create(req.body).then(vid => {
       res.status(201).json(vid);
     })
-    // const vid = await Vid.create(req.body);
-    // res.status(201).json(vid);
+
   }
   catch (err) {
     next(err);
@@ -55,8 +52,6 @@ router.get('/vid/:id',  (req, res, next) => {
     Vid.findById(req.params.id).then(vid => {      
       res.status(200).json(vid);
     })
-    // const vid = await Vid.findById(req.params.id);
-    // res.status(200).json(vid);
   }
   catch (err) {
     next(err);
@@ -72,8 +67,6 @@ router.post('/vid/:id',  (req, res, next) => {
     .then(vid => {
       res.status(200).json(vid);
     })
-    // const vid = await Vid.addVote(req.body.addedVote);
-    // res.status(200).json(vid);
   }
   catch (err) {
     next(err);
