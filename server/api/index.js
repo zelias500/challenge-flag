@@ -1,13 +1,48 @@
 import {Router} from 'express';
 import Vid from './Vid';
+// var Vid = require('mongoose').model('Vid');
 
 const router = new Router();
 
+function parseVidID (vid) {
+  return vid.vidURL.slice(vid.vidURL.indexOf('=')+1);
+}
+
 // get all videos
-router.get('/api/vid', async (req, res, next) => {
+router.get('/vid',  (req, res, next) => {
   try {
-    const vids = await Vid.find({});
-    res.status(200).json(vid);
+    Vid.find({}).then(vid => {
+      res.status(200).json(vid)
+    })
+    // const vids = await Vid.find({});
+    // res.status(200).json(vid);
+  }
+  catch (err) {
+    next(err);
+  }
+})
+
+router.post('/vid',  (req, res, next) => {
+  try {
+    let id = parseVidID(req.body);
+    req.body.vidID = id;
+    Vid.create(req.body).then(vid => {
+      res.status(201).json(vid);
+    })
+    // const vid = await Vid.create(req.body);
+    // res.status(201).json(vid);
+  }
+  catch (err) {
+    next(err);
+  }
+})
+
+// get a random video
+router.get('/vid/random', (req, res, next) => {
+  try {
+    Vid.findRandom().then(vid => {
+      res.status(200).json(vid);
+    })
   }
   catch (err) {
     next(err);
@@ -15,34 +50,34 @@ router.get('/api/vid', async (req, res, next) => {
 })
 
 // get one video
-router.get('/api/vid/:id', async (req, res, next) => {
+router.get('/vid/:id',  (req, res, next) => {
   try {
-    const vid = await Vid.findById(req.params.id);
-    res.status(200).json(vid);
+    Vid.findById(req.params.id).then(vid => {      
+      res.status(200).json(vid);
+    })
+    // const vid = await Vid.findById(req.params.id);
+    // res.status(200).json(vid);
   }
   catch (err) {
     next(err);
   }
 })
 
-router.post('/api/vid', async (req, res, next) => {
+router.post('/vid/:id',  (req, res, next) => {
   try {
-    const vid = await Vid.create(req.body);
-    res.status(201).json(vid);
+    Vid.findById(req.params.id)
+    .then(vid => {
+      return vid.addVote(req.body.addedVote)
+    })
+    .then(vid => {
+      res.status(200).json(vid);
+    })
+    // const vid = await Vid.addVote(req.body.addedVote);
+    // res.status(200).json(vid);
   }
   catch (err) {
     next(err);
   }
 })
 
-router.post('/api/vid/:id', async (req, res, next) => {
-  try {
-    const vid = await Vid.addVote(req.body.addedVote);
-    res.status(200).json(vid);
-  }
-  catch (err) {
-    next(err);
-  }
-})
-
-export default router;
+module.exports = router;

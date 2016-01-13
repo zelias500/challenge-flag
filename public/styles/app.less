@@ -6,12 +6,127 @@
 // Import Bootstrap
 @import "../../node_modules/bootstrap/less/bootstrap.less";
 
+* {
+	box-sizing: border-box;
+	font-family: 'Anton', sans-serif;
+}
+
+.app {
+	background-image: url('../refs.jpg');
+	// background-image: url('http://www.slate.com/content/dam/slate/articles/sports/sports_nut/features/2012/nfl_2012/week_3/nfl_referees_lockout_the_refs_win_the_pr_battle_the_owners_win_the_war_/152732555.jpg/_jcr_content/renditions/cq5dam.web.1280.1280.jpeg')
+	height: 100%;
+	width: 100%;
+}
+
+.page-header {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	background-color: yellow;
+}
+
 // Give the navigation some padding
 .nav {
-	margin: 10px 0;
-	
+	// float: left;
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	// margin: 10px 0;
+
 	// Style the active links
 	a.active {
 		font-weight: bold;
 	}
+
+	span {
+		margin: 5px;
+	}
+
+	button {
+		border-radius: 25%;
+		border: 1px solid black;
+		box-shadow: 0;
+		background-color: black;
+	}
+}
+
+.challenge {
+	display: flex;
+	// justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mgmtBtn {
+	display: flex;
+	justify-content: center;
+
+	button {
+		color: black;
+	}
+}
+
+.fluid {
+    position: relative;
+    padding-bottom: 56.25%; /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
+    padding-top: 30px;
+    height: 0;
+    overflow: auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+.btnContainer {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+
+	button {
+		// height: 10em;
+		width: 6em;
+		font-size:30px;
+		color: black;
+	}
+}
+
+.fluid iframe {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.uploader {
+	color: yellow;
+}
+
+.vidStats {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	h2 {
+		background-color: yellow;
+		padding: 10px;
+		border-radius: 5%;
+		color: black;
+	}
+
+	h3 {
+		padding: 10px;
+		border-radius: 5%;
+		color: black;
+		text-align: center;
+	}
+
+	.yesVotes {
+		background-color: green;
+		margin-right: 10px;
+	}
+	.noVotes {
+		background-color: red;
+		maring-left: 10px;
+	}
+
 }

@@ -1,9 +1,39 @@
-var React = require('react');
+import React from 'react';
+import Challenge from '../components/Challenge.jsx';
+import ManagementButtons from '../components/ManagementButtons.jsx';
+import Dispatcher from '../dispatcher';
 
 var Home = React.createClass({
+	getInitialState: function() {
+		return {vid: ''};
+	},
+	componentDidMount: function() {
+		fetch('/api/vid/random')
+		.then(res => {
+			return res.json();
+		})
+		.then(vid => {
+			this.setState({vid: vid})
+		})
+	},
+	getRandomVid: function(){
+		fetch('/api/vid/random')
+		.then(res => {
+			return res.json()
+		})
+		.then(vid => {
+			this.setState({
+				vid: vid
+			})
+			Dispatcher.emit('RANDOM_VID');
+		})
+	},
 	render: function() {
 		return (
-			<p>Home Page</p>
+			<div>
+				<Challenge vid={this.state.vid}/>
+				<ManagementButtons getRand={this.getRandomVid} />
+			</div>
 		);
 	}
 });

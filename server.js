@@ -1,14 +1,18 @@
+require('babel-register');
 var express = require('express');
 var babelify = require('babelify');
 var browserify = require('browserify-middleware');
 var less = require('less-middleware');
 var nunjucks = require('nunjucks');
 var config = require('./client/config');
-import devConfig from './dev-config';
+
+const bodyParser = require('body-parser');
+const devConfig = require('./dev-config');
 
 // spin up the database
 const mongoose = require('mongoose');
 const db = mongoose.connect(devConfig.dbURI).connection;
+require('./server/api/Vid.js')
 const startDbPromise = new Promise(function (resolve, reject) {
     db.on('open', resolve);
     db.on('error', reject);
@@ -21,6 +25,9 @@ startDbPromise.then(function () {
 // initialise express
 var app = express();
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 // use nunjucks to process view templates in express
 nunjucks.configure('server/templates/views', {
     express: app
@@ -30,8 +37,7 @@ nunjucks.configure('server/templates/views', {
 app.use(less('public'));
 // public assets are served before any dynamic requests
 app.use(express.static('public'));
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+
 
 // common packages are precompiled on server start and cached
 app.get('/js/' + config.common.bundle, browserify(config.common.packages, {
@@ -44,7 +50,7 @@ app.get('/js/' + config.common.bundle, browserify(config.common.packages, {
 app.use('/js', browserify('./client/scripts', {
 	external: config.common.packages,
 	transform: [babelify.configure({
-		plugins: ['object-assign']
+		presets: ['es2015', 'react']
 	})]
 }));
 
@@ -61,6 +67,11 @@ app.get('*', function(req, res) {
 	// template. Doing this allows react-router to render the view in the app.
     res.render('index.html');
 });
+
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).send('INTERNAL SERVER ERROR');
+})
 
 // start the server
 var server = app.listen(process.env.PORT || 3000, function() {
