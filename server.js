@@ -8,17 +8,17 @@ var config = require('./client/config');
 
 const bodyParser = require('body-parser');
 
-var config;
+var secretsConfig;
 if (process.env.NODE_ENV === 'production') {
-	config = {
+	secretsConfig = {
 		dbURI: process.env.MONGOLAB_URI
 	}
 }
-else config = require('./dev-config');
+else secretsConfig = require('./dev-config');
 
 // spin up the database
 const mongoose = require('mongoose');
-const db = mongoose.connect(config.dbURI).connection;
+const db = mongoose.connect(secretsConfig.dbURI).connection;
 require('./server/api/Vid.js')
 const startDbPromise = new Promise(function (resolve, reject) {
     db.on('open', resolve);
