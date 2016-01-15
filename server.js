@@ -8,7 +8,7 @@ var config = require('./client/config');
 
 const bodyParser = require('body-parser');
 
-const config;
+var config;
 if (process.env.NODE_ENV === 'production') {
 	config = {
 		dbURI: process.env.MONGOLAB_URI
