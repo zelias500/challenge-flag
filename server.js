@@ -7,7 +7,7 @@ var nunjucks = require('nunjucks');
 var config = require('./client/config');
 
 const bodyParser = require('body-parser');
-const devConfig = require('./dev-config');
+const devConfig = require('./dev-config') || { dbURI: process.env.MONGOLAB_URI };
 
 // spin up the database
 const mongoose = require('mongoose');
