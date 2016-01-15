@@ -62,8 +62,8 @@ const Upload =  React.createClass({
 				<h3>Vine URL</h3><input type='text' value={this.state.vidURL} onChange={this.handleURLChange} />
 				<h3>What did the refs say?</h3> 
 				<select value={this.state.officialCall} onChange={this.handleOfficialCallChange}>
-					<option>CATCH</option>
-					<option>NO CATCH</option>
+					<option>GOOD</option>
+					<option>NO GOOD</option>
 				</select>
 			<p><input type='submit' value='post' className='btn btn-info' /></p>
 			</form>
