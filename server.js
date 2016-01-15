@@ -7,11 +7,18 @@ var nunjucks = require('nunjucks');
 var config = require('./client/config');
 
 const bodyParser = require('body-parser');
-const devConfig = require('./dev-config') || { dbURI: process.env.MONGOLAB_URI };
+
+const config;
+if (process.env.NODE_ENV === 'production') {
+	config = {
+		dbURI: process.env.MONGOLAB_URI
+	}
+}
+else config = require('./dev-config');
 
 // spin up the database
 const mongoose = require('mongoose');
-const db = mongoose.connect(devConfig.dbURI).connection;
+const db = mongoose.connect(config.dbURI).connection;
 require('./server/api/Vid.js')
 const startDbPromise = new Promise(function (resolve, reject) {
     db.on('open', resolve);
