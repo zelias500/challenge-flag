@@ -59,7 +59,7 @@ const Upload =  React.createClass({
 				{this.state.success ? <h1>UPLOAD SUCCESSFUL</h1> : null}
 				<h3>Title:</h3><input type='text' value={this.state.title} onChange={this.handleTitleChange} />
 				<h3>Player:</h3><input type='text' value={this.state.player} onChange={this.handlePlayerChange} />
-				<h3>Youtube URL</h3><input type='text' value={this.state.vidURL} onChange={this.handleURLChange} />
+				<h3>Vine URL</h3><input type='text' value={this.state.vidURL} onChange={this.handleURLChange} />
 				<h3>What did the refs say?</h3> 
 				<select value={this.state.officialCall} onChange={this.handleOfficialCallChange}>
 					<option>CATCH</option>

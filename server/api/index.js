@@ -5,7 +5,8 @@ import Vid from './Vid';
 const router = new Router();
 
 function parseVidID (vid) {
-  return vid.vidURL.slice(vid.vidURL.indexOf('=')+1);
+  // return vid.vidURL.slice(vid.vidURL.indexOf('=')+1) // for YOUTUBE
+  return vid.vidURL.slice(18, 29); // for VINES
 }
 
 // get all videos
