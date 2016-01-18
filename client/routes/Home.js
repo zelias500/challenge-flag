@@ -22,10 +22,16 @@ var Home = React.createClass({
 			return res.json()
 		})
 		.then(vid => {
-			this.setState({
-				vid: vid
-			})
-			Dispatcher.emit('RANDOM_VID');
+			// make sure you get a different video
+			if (this.state.vid.vidID === vid.vidID) {
+				return this.getRandomVid();
+			}
+			else {
+				this.setState({
+					vid: vid
+				})
+				Dispatcher.emit('RANDOM_VID');
+			}
 		})
 	},
 	render: function() {
