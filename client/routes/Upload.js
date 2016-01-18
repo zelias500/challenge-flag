@@ -3,7 +3,6 @@ import Dispatcher from '../dispatcher';
 
 const Upload =  React.createClass({
 	getInitialState: function() {
-		console.log(this.props)
 		return {
 			title: '',
 			player: '',
@@ -44,13 +43,7 @@ const Upload =  React.createClass({
 		})
 		.then(vid => {
 			Dispatcher.emit('NEW_VID', vid);
-			this.setState({
-				title: '',
-				player: '',
-				vidURL: '',
-				officialCall: '',
-				success: true
-			})
+			this.props.history.replaceState(null, '/home');
 		})
 
 	},
