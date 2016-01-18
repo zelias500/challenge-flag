@@ -13,7 +13,7 @@ const Challenge = React.createClass({
 			this.setState({
 				hasVoted: false
 			})
-		})
+		});
 	},
 	vote: function(bool) {
 		fetch('/api/vid/'+this.props.vid._id, {

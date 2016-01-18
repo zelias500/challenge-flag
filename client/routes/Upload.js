@@ -1,7 +1,9 @@
-var React = require('react');
+import React from 'react';
+import Dispatcher from '../dispatcher';
 
 const Upload =  React.createClass({
 	getInitialState: function() {
+		console.log(this.props)
 		return {
 			title: '',
 			player: '',
@@ -29,7 +31,6 @@ const Upload =  React.createClass({
 			vidURL: this.state.vidURL,
 			officialCall: this.state.officialCall
 		}
-		console.log("DATA", data);
 		fetch('/api/vid', {
 			method: 'post',
 			headers: {
@@ -42,6 +43,7 @@ const Upload =  React.createClass({
 			return res.json()
 		})
 		.then(vid => {
+			Dispatcher.emit('NEW_VID', vid);
 			this.setState({
 				title: '',
 				player: '',

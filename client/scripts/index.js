@@ -1,6 +1,9 @@
 require('isomorphic-fetch');
-var React = require('react'),
-	Router = require('react-router');
+import React from 'react';
+import {Router, Route, Link, IndexRoute} from 'react-router';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
+// var React = require('react'),
+// 	Router = require('react-router');
 
 var Header = React.createClass({
 	render: function() {
@@ -16,9 +19,9 @@ var PageNav = React.createClass({
 	render: function() {
 		return (
 			<div className="nav">
-				<span><Router.Link to="home" >{'Home '}</Router.Link></span>
+				<span><Link to="/home" >{'Home '}</Link></span>
 					|
-				<span><Router.Link to="upload" >{' Upload'}</Router.Link></span>
+				<span><Link to="/upload" >{' Upload'}</Link></span>
 			</div>
 		);
 	}
@@ -32,7 +35,7 @@ var App = React.createClass({
 				<PageNav />
 				<Header />
 			  </div>
-				<Router.RouteHandler/>
+			  {this.props.children}
 			</div>
 		);
 	}
@@ -43,14 +46,15 @@ var routes = {
 	Upload: require('../routes/Upload')
 };
 
-var routes = (
-	<Router.Route name="app" path="/" handler={App}>
-		<Router.Route name="home" path="/" handler={routes.Home}/>
-		<Router.Route name="upload" path="/upload" handler={routes.Upload}/>
-		<Router.DefaultRoute handler={routes.Home}/>
-	</Router.Route>
-);
+React.render((
+	<Router history={createBrowserHistory()}>
+		<Route path='/' component={App}>
+			<IndexRoute component={routes.Home} />
+			<Route path='home' component={routes.Home} />
+			<Route path='upload' component={routes.Upload} />
+		</Route>
+	</Router>
+	), document.body)
 
-Router.run(routes, Router.HistoryLocation, function (Handler) {
-	React.render(<Handler/>, document.body);
-});
+
+

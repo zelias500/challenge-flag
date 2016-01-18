@@ -14,6 +14,10 @@ var Home = React.createClass({
 		})
 		.then(vid => {
 			this.setState({vid: vid})
+		});
+
+		Dispatcher.on('NEW_VID', (vid) => {
+			this.setState({vid:vid});
 		})
 	},
 	getRandomVid: function(){
