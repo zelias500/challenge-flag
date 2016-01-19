@@ -9,7 +9,7 @@ export default React.createClass({
 		return this.props.vid.yesVotes + this.props.vid.noVotes;
 	},
 	calcPercentage: function(bool) {
-		return Math.floor(Number((this.props.vid.yesVotes/this.getTotalVotes())*100));
+		return Math.floor(Number((this.props.vid.yesVotes/this.getTotalVotes())*100)) || 0;
 	},
 	render: function() {
 		return (
